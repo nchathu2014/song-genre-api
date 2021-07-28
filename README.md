@@ -1,6 +1,6 @@
 # Song Genre API
 
-API
+## API
 
 GET | api/genres
 GET | api/genres/:id
@@ -25,3 +25,17 @@ request body
 ```
 
 DELETE | api/genres/:id
+
+
+## Start the project
+Install nodemon globally to your host machine
+```
+npm i -g nodemon
+
+```
+
+Then,
+
+```
+nodemon index.js
+```
