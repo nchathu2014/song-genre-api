@@ -1,0 +1,27 @@
+{
+  "name": "song-genre-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nchathu2014/song-genre-api.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nchathu2014/song-genre-api/issues"
+  },
+  "homepage": "https://github.com/nchathu2014/song-genre-api#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "joi": "^13.1.0",
+    "underscore": "^1.13.1"
+  }
+}
