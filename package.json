@@ -18,10 +18,10 @@
   },
   "homepage": "https://github.com/nchathu2014/song-genre-api#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "mongoose": "^5.0.2"
   },
   "devDependencies": {
-    "joi": "^13.1.0",
-    "underscore": "^1.13.1"
+    "joi": "^13.1.0"
   }
 }
