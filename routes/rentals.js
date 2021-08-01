@@ -38,10 +38,15 @@ router.post('/', async (req, res) => {
             dailyRentalRate: movie.dailyRentalRate
         }
     });
-    rental = await rental.save();
+
+    //Here rental saved and movie saved(), if somthing happned in rental and not saved() but movie.save() brings
+    // Data inconsistancy, Here we need TRANSACTION to atomically handle this two operations
+    // In MongoDB, it is not Transaction concept like relational databases. Mongo uses Two-Phase commit 
+
+    rental = await rental.save(); // OPERATION 1
 
     movie.numberInStock--;
-    movie.save();
+    movie.save();   // OPERATION 2
 
     res.send(rental);
 });
