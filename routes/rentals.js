@@ -47,7 +47,8 @@ router.post('/', async (req, res) => {
 
     movie.numberInStock--;
     movie.save();   // OPERATION 2
-
+    // We have to use Transaction approach here OPERATION 1 and OPERATION 2 have to be atomic, if 
+    //either fails changes have to be rollback
     res.send(rental);
 });
 

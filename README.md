@@ -2,29 +2,31 @@
 
 ## API
 
+## genres
 GET | api/genres
 GET | api/genres/:id
-
 POST | api/genres
-
-request body
-```
-{
-    "name": String | Minimum Length 3 | Required,
-    "desc": String | Minimum Length 10 
-}
-```
-
 PUT | api/genres/:id
-request body
-```
-{
-    "name": String | Minimum Length 3 | Required,
-    "desc": String | Minimum Length 10 
-}
-```
-
 DELETE | api/genres/:id
+
+## customers
+GET | api/customers
+GET | api/customers/:id
+POST | api/customers
+PUT | api/customers/:id
+DELETE | api/customers/:id
+
+## movies
+GET | api/movies
+GET | api/movies/:id
+POST | api/movies
+PUT | api/movies/:id
+DELETE | api/movies/:id
+
+## rentals
+GET | api/rentals
+GET | api/rentals/:id
+POST | api/rentals
 
 
 ## Start the project
