@@ -1,10 +1,14 @@
 const express = require('express');
+const Fawn = require('fawn');
+const mongoose = require('mongoose');
+
 const { Customer } = require('../models/customer');
 const { Movie } = require('../models/movie');
 const { Rental, validate } = require('./../models/rentals');
 
 const router = express.Router();
 
+Fawn.init(mongoose);
 
 //GET
 router.get('/', async (req, res) => {
@@ -43,13 +47,27 @@ router.post('/', async (req, res) => {
     // Data inconsistancy, Here we need TRANSACTION to atomically handle this two operations
     // In MongoDB, it is not Transaction concept like relational databases. Mongo uses Two-Phase commit 
 
-    rental = await rental.save(); // OPERATION 1
+    //Task is like Transaction
+    //rentals is the collection in MongoDB
+    try {
+        Fawn.Task()
+            .save('rentals', rental)
+            .update('movies', { _id: movie._id }, {
+                $inc: { numberInStock: -1 }
+            })
+            .run();
+        res.send(rental);
+    } catch (error) {
+        res.status(500).send('Somthing Fail');
+    }
 
-    movie.numberInStock--;
-    movie.save();   // OPERATION 2
+    // rental = await rental.save(); // OPERATION 1
+
+    //movie.numberInStock--;
+    // movie.save();   // OPERATION 2
     // We have to use Transaction approach here OPERATION 1 and OPERATION 2 have to be atomic, if 
     //either fails changes have to be rollback
-    res.send(rental);
+
 });
 
 router.get('/:id', async (req, res) => {
