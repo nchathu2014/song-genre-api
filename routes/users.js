@@ -1,10 +1,12 @@
+const jwt = require('jsonwebtoken');
+const config = require('config');
 const express = require('express');
 const bcrypt = require('bcrypt');
 const router = express.Router();
 
 const _ = require('lodash');
 
-const { User, validate } = require('./../models/users');
+const { User, validate } = require('../models/user');
 
 //POST
 router.post('/', async (req, res) => {
@@ -26,7 +28,11 @@ router.post('/', async (req, res) => {
     const hashPwd = await bcrypt.hash(req.body.password, salt);
     user.password = hashPwd;
     await user.save();
-    res.send(_.pick(user, ['_id', 'name', 'email']));
+
+    //generate jwt and set res header to use in FE
+    const token = user.generateAuthToken();
+
+    res.header('x-auth-token', token).send(_.pick(user, ['_id', 'name', 'email']));
 
     // Old way of doing
     /* res.send({
