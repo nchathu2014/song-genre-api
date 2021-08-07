@@ -7,6 +7,12 @@ const router = express.Router();
 const _ = require('lodash');
 
 const { User, validate } = require('../models/user');
+const authorization = require('./../middleware/auth');
+
+router.get('/me', authorization, async (req, res) => {
+    const user = await User.findById(req.user._id).select('-password');
+    res.send(user)
+});
 
 //POST
 router.post('/', async (req, res) => {
