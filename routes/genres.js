@@ -4,17 +4,15 @@ const router = express.Router();
 const auth = require('./../middleware/auth');
 
 const { Genre, validate } = require('./../models/genre');
+const asyncMiddleware = require('./../middleware/async');
+
 
 //GET
-router.get('/', async (req, res) => {
-    try {
-        const genres = await Genre.find().sort('name');
-        res.send(genres)
-    } catch (ex) {
-        //Log the exception
-        res.status(500).send('Something failed.')
-    }
-});
+router.get('/', asyncMiddleware(async (req, res) => {
+    const genres = await Genre.find().sort('name');
+    res.send(genres)
+
+}));
 
 router.get('/:id', async (req, res) => {
     const genre = await Genre.findById(req.params.id)
@@ -23,7 +21,7 @@ router.get('/:id', async (req, res) => {
 });
 
 //POST
-router.post('/', auth, async (req, res) => {
+router.post('/', auth, asyncMiddleware(async (req, res) => {
 
     //Body parameter validation
     const { error } = validate(req.body);
@@ -32,7 +30,7 @@ router.post('/', auth, async (req, res) => {
     let genre = new Genre({ name: req.body.name });
     genre = await genre.save()
     res.send(genre)
-});
+}));
 
 //PUT
 router.put('/:id', auth, async (req, res) => {
